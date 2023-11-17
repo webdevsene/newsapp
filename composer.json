@@ -35,8 +35,10 @@
         "symfony/string": "6.3.*",
         "symfony/translation": "6.3.*",
         "symfony/twig-bundle": "6.3.*",
+        "symfony/ux-react": "^2.13",
         "symfony/validator": "6.3.*",
         "symfony/web-link": "6.3.*",
+        "symfony/webpack-encore-bundle": "^2.1",
         "symfony/yaml": "6.3.*",
         "twig/extra-bundle": "^2.12|^3.0",
         "twig/twig": "^2.12|^3.0"
@@ -70,8 +72,9 @@
     },
     "scripts": {
         "auto-scripts": {
-            "cache:clear": "symfony-cmd",
-            "assets:install %PUBLIC_DIR%": "symfony-cmd"
+            "ckeditor:install --tag=4.22.1": "symfony-cmd",
+            "assets:install %PUBLIC_DIR%": "symfony-cmd",
+            "cache:clear": "symfony-cmd"
         },
         "post-install-cmd": [
             "@auto-scripts"
@@ -90,6 +93,8 @@
         }
     },
     "require-dev": {
+        "easycorp/easyadmin-bundle": "^4.8",
+        "friendsofsymfony/ckeditor-bundle": "^2.4",
         "phpunit/phpunit": "^9.5",
         "symfony/browser-kit": "6.3.*",
         "symfony/css-selector": "6.3.*",
@@ -97,6 +102,7 @@
         "symfony/maker-bundle": "^1.0",
         "symfony/phpunit-bridge": "^6.3",
         "symfony/stopwatch": "6.3.*",
-        "symfony/web-profiler-bundle": "6.3.*"
+        "symfony/web-profiler-bundle": "6.3.*",
+        "vich/uploader-bundle": "^2.2"
     }
 }
