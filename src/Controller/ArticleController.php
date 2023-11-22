@@ -54,4 +54,89 @@ class ArticleController extends AbstractController
             return $this->json($th);
         }
     }
+
+
+
+    /**
+     * Cette api methode sert à obtenir un post
+     */
+    #[Route("/article/{id}", name: "app_article_show", methods:["GET"])]
+    public function show(EntityManagerInterface $doctrine, $id=""): Response
+    {
+        if (!$id) {
+  
+            return $this->json('No ressource found for id : [' . $id . "]", 404);
+        }
+
+        $res = $doctrine
+            ->getRepository(Article::class)
+            ->find($id);
+
+  
+        if (!$res) {
+  
+            return $this->json('No ressource found for id : [' . $id . "]", 404);
+        }
+  
+        $data =  [
+            'id' => $res->getId(),
+            'titre'        => $res->getTitre(),
+            'featuredText'     => $res->getFeaturedText(),
+            "contenu"      => $res->getContenu(),
+            "createdAt"  => $res->getCreatedAt(),    
+            "categorie"  => $res->getCategories() != null ? $res->getCategories()->getLibelle() : "RAS",    
+            "url_image"  =>  $res->getImage(),
+            "pubDate"  => $res->getPublishedAt(),
+            "etiquette"  => $res->getEtiquettes() != null ? $res->getEtiquettes()->getLibelle(): "PAS",
+        ];
+          
+        return $this->json($data, 200);
+    }
+
+    #[Route('/postsgrandeune', name: 'app_postsgrandeune', methods:["GET", "POST"])]
+    public function postsgrandeune(EntityManagerInterface $doctrine): Response
+    {
+
+        // posts avec ettiquettes GRANDEUNE
+        $posts =  $doctrine->getRepository(Article::class)
+        ->findBy(['etiquettes'=>["2"]], array('createdAt'=>'DESC'),3,0);
+
+
+        $data = [];
+        
+        $response = [];
+        
+        try {
+    
+            foreach ($posts as $ressource) {
+    
+                $data [] = [
+                        'id' => $ressource->getId(),
+                        'titre'        => $ressource->getTitre(),
+                        'featuredText'     => $ressource->getFeaturedText(),
+                        "contenu"      => $ressource->getContenu(),
+                        "createdAt"  => $ressource->getCreatedAt(),    
+                        "categorie"  => $ressource->getCategories() != null ? $ressource->getCategories()->getLibelle() : "RAS",    
+                        "url_image"  =>  $ressource->getImage(),
+                        "pubDate"  => $ressource->getPublishedAt(),
+                        "etiquette"  => $ressource->getEtiquettes() != null ? $ressource->getEtiquettes()->getLibelle(): "PAS",
+
+                    ];                    
+                      
+            }
+    
+            $response["data"] = $data;
+    
+            return $this->json($response);
+    
+        } catch (\Throwable $th) {
+            $th = [
+                'status' => $th->getCode(),
+                'errors' => $th->getMessage(),
+                ];
+    
+            return $this->json($th);
+        }
+    }
+
 }

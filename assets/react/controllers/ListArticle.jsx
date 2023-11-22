@@ -8,6 +8,8 @@ import CardActions from '@mui/material/CardActions';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import TextTruncate from 'react-text-truncate';
+import ResponsiveAppBar from "./ResponsiveAppBar";
+import Slideshow from "./Slideshow";
 
 
 function ListArticle() {
@@ -31,15 +33,19 @@ function ListArticle() {
         .catch(function (error) {
             console.log(error);
         })
+
     }
 
 
 
     return (
         
-        
+        <>
 
-            <div className="container">
+            <ResponsiveAppBar/>
+
+            <Slideshow/>
+            <div className="container p-0">
                     <div className="card">
                         <div className="card header">
                             <h2 className="text-left mt-1 p-2 mb-3"><NewspaperIcon/> Actualité </h2>
@@ -48,43 +54,45 @@ function ListArticle() {
                         <div className="card-body">
                 
                             <div className="row align-left">
-                                    {listArticle.map((res, key)=>{
+                                    {listArticle.map((res, keys)=>{
                                         return (
 
-                                            
+                                            <Card key={keys} sx={{ mx: 1, mb: 3, maxWidth: 305 }}>
+                                                    <CardMedia
+                                                    sx={{ height: 140 }}
+                                                    image={`/uploads/posts/${res.url_image}`}
 
-                                            <Card sx={{ mx: 1, mb: 3, maxWidth: 305 }}>
-                                                <CardMedia
-                                                sx={{ height: 140 }}
-                                                image={`/uploads/posts/${res.url_image}`}
-
-                                                title="green iguana/"
-                                                
-                                                
-                                                />
-                                                <CardContent>
-                                                <Typography gutterBottom variant="h6" component="div">
-                                                    <TextTruncate
-                                                        line={2}
-                                                        element="span"
-                                                        truncateText="…"
-                                                        text= {res.titre}
-                                                    />
+                                                    title="green iguana/"
                                                     
-                                                </Typography>
-                                                <Typography variant="body2" color="text.secondary">
-                                                    <TextTruncate
-                                                        line={3}
-                                                        truncateText="..."
-                                                        text={res.featuredText}
+                                                    
                                                     />
-                                                </Typography>
-                                                </CardContent>
-                                                <CardActions>
-                                                <Button size="small">Share</Button>
-                                                <Button size="small">Learn More</Button>
-                                                </CardActions>
-                                          </Card>
+                                                    <CardContent>
+                                                    
+                                                    <Typography gutterBottom variant="h6" component="div">
+                                                        <TextTruncate
+                                                            line={2}
+                                                            element="span"
+                                                            truncateText="…"
+                                                            text= {res.titre}
+                                                        />
+                                                        
+                                                        
+                                                    </Typography>
+                                                        
+                                                    <Typography variant="body2" color="text.secondary">
+                                                        <TextTruncate
+                                                            line={3}
+                                                            truncateText="..."
+                                                            text={res.featuredText}
+                                                        />
+                                                    </Typography>
+                                                    </CardContent>
+                                                    <CardActions>
+                                                    <Button size="small">Partager</Button>
+                                                    <Button size="small"  href={`/postdetails/${res.id}`}>Lire plus</Button>
+                                                    </CardActions>
+                                                </Card>
+
                                               
                                         )
                                     })}
@@ -93,6 +101,10 @@ function ListArticle() {
                         </div>
                     </div>
             </div>
+        
+        </>
+        
+
 
     );
     

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Fade } from 'react-slideshow-image';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
@@ -9,6 +9,8 @@ import ImageListItemBar from '@mui/material/ImageListItemBar';
 import IconButton from '@mui/material/IconButton';
 import InfoIcon from '@mui/icons-material/Info';
 import ListArticle from './ListArticle';
+import axios from 'axios';
+import ResponsiveAppBar from './ResponsiveAppBar';
 
 
 const fadeImages = [
@@ -53,70 +55,94 @@ const itemData = [
       cols: 2,
     }
   ];
+  
+  
+  function Slideshow () {
+      
+    const [grandeUnes, setGrandeUnes] = useState([]);
 
-function Slideshow () {
-  return (
+    useEffect(()=>{
+        axios.get('/api/postsgrandeune')
+             .then(result => {
+                 setGrandeUnes(result.data);
+                
+             }).catch((err) => {
+                
+             });
 
-    <div className="container">
-        <div className="row">
+             
+    }, []);
 
 
-            <div className="col-sm-6">
+    return (
 
-                    <div className="slide-container" >
-                        <Fade>
-                            {fadeImages.map((fadeImage, index) => (
-                                <div key={index}>
-                                <img style={{ width: '100%' }} src={fadeImage.url} />
-                                <h2>{fadeImage.caption}</h2>
-                            </div>
-                            ))}
-                        </Fade>
-                    </div>
-            </div>
+        //
+      <>
 
-            <div className="col-sm-6">
+        <div className="p-0 container">
+            <div className="row m-0">
+                <div className="p-0 col-sm-6">
 
-                                <ImageList >
-                                    {itemData.map((item) => (
-                                        <ImageListItem key={item.img}>
-                                        <img
-                                            srcSet={`${item.img}?w=248&fit=crop&auto=format&dpr=2 2x`}
-                                            src={`${item.img}?w=248&fit=crop&auto=format`}
-                                            alt={item.title}
-                                            loading="lazy"
-                                        />
-                                        <ImageListItemBar
-                                            title={item.title}
-                                            subtitle={item.author}
-                                            actionIcon={
-                                            <IconButton
-                                                sx={{ color: 'rgba(255, 255, 255, 0.54)' }}
-                                                aria-label={`info about ${item.title}`}
-                                            >
-                                                <InfoIcon />
-                                            </IconButton>
-                                            }
-                                        />
-                                        </ImageListItem>
-                                    ))}
-                                </ImageList>
 
+                        <div className="slide-container" >
+
+                            <Fade>
+                                {grandeUnes["data"] ?  grandeUnes['data'].map(fadeImage => {
+                                    return (<>
+                                                                                        
+                                        <div key={`bann-${fadeImage.id}`}>
+                                            <img style={{ width: '100%', height: 328 }} 
+                                                 src={`/uploads/posts/${fadeImage.url_image}`}
+                                                 loading="lazy"
+                                            />
+
+                                            <ImageListItemBar
+                                                title={fadeImage.titre}
+                                                subtitle={`@${fadeImage.etiquette}`}
+                                            />                                        
+                                        </div>
+                                    </>)
+                                }) : ""}                                
+                            </Fade>
+                                
+                        </div>
+                </div>
+
+                <div className=" p-0 col-sm-6">
+
+                                    <ImageList >
+                                        {itemData.map((item) => (
+                                            <ImageListItem key={item.img}>
+                                            <img
+                                                srcSet={`${item.img}?w=248&fit=crop&auto=format&dpr=2 2x`}
+                                                src={`${item.img}?w=248&fit=crop&auto=format`}
+                                                alt={item.title}
+                                                loading="lazy"
+                                            />
+                                            <ImageListItemBar
+                                                title={item.title}
+                                                subtitle={item.author}
+                                                actionIcon={
+                                                <IconButton
+                                                    sx={{ color: 'rgba(255, 255, 255, 0.54)' }}
+                                                    aria-label={`info about ${item.title}`}
+                                                >
+                                                    <InfoIcon />
+                                                </IconButton>
+                                                }
+                                            />
+                                            </ImageListItem>
+                                        ))}
+                                    </ImageList>
+
+                </div>
             </div>
         </div>
-
-        <ListArticle/>
-    </div>
-
+      
+      </>
 
 
-
-
-
-
-    
-
-  )
+    )
 }
 
 export default Slideshow;

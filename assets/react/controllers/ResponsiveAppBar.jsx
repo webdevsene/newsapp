@@ -1,4 +1,5 @@
 import * as React from 'react';
+import {BrowserRouter as Router, Link, Route, Routes } from "react-router-dom";
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -17,14 +18,16 @@ import YouTubeIcon from '@mui/icons-material/YouTube';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import { TextField } from '@mui/material';
 import HomeIcon from '@mui/icons-material/Home';
+import Slideshow from './Slideshow';
 
 const pages = ['Actualités', 'Economie', 'Sport', 'People', 'Décriptage', 'Contribution'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
+
 function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
-
+    
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
@@ -63,7 +66,7 @@ function ResponsiveAppBar() {
                     <div className="display-4">
                         Rewmi network
                     </div>
-                    <div className="text-secondary"> friday, nov 16, 2023</div>
+                    <div className="text-secondary"> friday</div>
                 </div>
 
 
@@ -80,8 +83,10 @@ function ResponsiveAppBar() {
                 <div className="container-fluid">
                     <div className="collapse navbar-collapse" id="navbarNavDropdown">
                         <ul className="navbar-nav mx-auto">
+
+                            
                             <li className="nav-item">
-                                <a href="#" className="nav-link mx-2 active" aria-current="page"> <HomeIcon/> </a>
+                                <a href="/" className="nav-link mx-2 active" aria-current="page"> <HomeIcon/> </a>
                             </li>
                             <li className="nav-item">
                                 <a href="#" className="nav-link mx-2 ">Actualité</a>
@@ -108,7 +113,9 @@ function ResponsiveAppBar() {
                     </div>
                 </div>
             </nav>
+            
         </div>
+
 
 
         <div className="border-bottom d-flex" id="subNavContainer">
