@@ -27,6 +27,7 @@ class ArticleCrudController extends AbstractCrudController
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
+                ->renderSidebarMinimized()
                 ->setEntityLabelInSingular('article du site')
                 ->setEntityLabelInPlural('articles du site')
                 ->setPageTitle(Crud::PAGE_INDEX, 'Liste des articles ')
@@ -43,7 +44,6 @@ class ArticleCrudController extends AbstractCrudController
     {
 
         $uploadsDir = $this->getParameter('medias_directory');
-
 
         return [
 

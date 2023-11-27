@@ -10,8 +10,8 @@ function Main() {
    
       <Switch>
         <Routes>
-          <Route exact path="/"  element={<ListArticle/>} />
-          <Route path='/postdetails/:id' element={<PostDetails/>}  />
+          <Route exact path="/site"  element={<ListArticle/>} />
+          <Route path='/site/postdetails/:id' element={<PostDetails/>}  />
         </Routes>
         
       </Switch>

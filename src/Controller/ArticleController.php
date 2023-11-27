@@ -31,7 +31,7 @@ class ArticleController extends AbstractController
                         'id' => $ressource->getId(),
                         'titre'        => $ressource->getTitre(),
                         'featuredText'     => $ressource->getFeaturedText(),
-                        "contenu"      => $ressource->getContenu(),
+                        "contenu"      => html_entity_decode($ressource->getContenu()),
                         "createdAt"  => $ressource->getCreatedAt(),    
                         "categorie"  => $ressource->getCategories() != null ? $ressource->getCategories()->getLibelle() : "RAS",    
                         "url_image"  =>  $ressource->getImage(),

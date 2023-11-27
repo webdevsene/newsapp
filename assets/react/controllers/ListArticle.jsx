@@ -89,7 +89,7 @@ function ListArticle() {
                                                     </CardContent>
                                                     <CardActions>
                                                     <Button size="small">Partager</Button>
-                                                    <Button size="small"  href={`/postdetails/${res.id}`}>Lire plus</Button>
+                                                    <Button size="small"  href={`/site/postdetails/${res.id}`}>Lire plus</Button>
                                                     </CardActions>
                                                 </Card>
 

@@ -50,11 +50,11 @@ function ResponsiveAppBar() {
         <div className="p-3 bg-light">
             <div className="row align-items-center">
                 <div className="col-lg-3 col-md-3 d-none d-md-block">
-                    <div className="row d-flex justify-content-center">
+                    <div className="">
                         <MenuIcon/>
                         <strong> Rewmi network</strong>
                     </div>
-                    <div className="mt-1 text-secondary d-flex justify-content-center">
+                    <div className="mt-1 text-secondary d-flex justify-content">
                         <FacebookIcon/> 
                         <YouTubeIcon/>
                         <TwitterIcon/>
@@ -86,7 +86,7 @@ function ResponsiveAppBar() {
 
                             
                             <li className="nav-item">
-                                <a href="/" className="nav-link mx-2 active" aria-current="page"> <HomeIcon/> </a>
+                                <a href="/site" className="nav-link mx-2 active" aria-current="page"> <HomeIcon/> </a>
                             </li>
                             <li className="nav-item">
                                 <a href="#" className="nav-link mx-2 ">Actualité</a>
