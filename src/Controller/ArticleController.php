@@ -88,6 +88,7 @@ class ArticleController extends AbstractController
             "url_image"  =>  $res->getImage(),
             "pubDate"  => $res->getPublishedAt(),
             "etiquette"  => $res->getEtiquettes() != null ? $res->getEtiquettes()->getLibelle(): "PAS",
+            "createdby" => $res->getCreatedBy() != null ? $res->getCreatedBy()->getNom()." ".$res->getCreatedBy()->getPrenom() : "pengouin" ,
         ];
           
         return $this->json($data, 200);

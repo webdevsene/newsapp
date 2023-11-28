@@ -55,6 +55,7 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
        */
       public function setPassword(User $entity): void
       {
+        
           $pass = $entity->getPassword();
 
           $entity->setPassword(

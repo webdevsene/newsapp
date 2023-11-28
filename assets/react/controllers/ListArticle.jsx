@@ -10,6 +10,7 @@ import Button from '@mui/material/Button';
 import TextTruncate from 'react-text-truncate';
 import ResponsiveAppBar from "./ResponsiveAppBar";
 import Slideshow from "./Slideshow";
+import Footer from "./Footer";
 
 
 function ListArticle() {
@@ -101,6 +102,8 @@ function ListArticle() {
                         </div>
                     </div>
             </div>
+
+            <Footer/>
         
         </>
         

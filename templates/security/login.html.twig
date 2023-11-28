@@ -3,31 +3,110 @@
 {% block title %}Log in!{% endblock %}
 
 {% block body %}
-<form method="post">
-    {% if error %}
-        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-    {% endif %}
 
-    {% if app.user %}
-        <div class="mb-3">
-            You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
+
+<section class="vh-100" style="background-image: url('{{asset('img/background-rewmi-1.png')}}'); background-color: #faf7f8;">
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col col-xl-10">
+        <div class="card" style="border-radius: 1rem;">
+          <div class="row g-0">
+            <div class="col-md-6 col-lg-5 d-none d-md-block">
+              <img src="{{ asset('img/background-rewmi-1.png') }}"
+                   alt="login form" 
+                   class="img-fluid" 
+                   style="border-radius: 1rem 0 0 1rem; height:100%;" 
+                />
+            </div>
+            <div class="col-md-6 col-lg-7 d-flex align-items-center">
+              <div class="card-body p-4 p-lg-5 text-black">
+
+
+
+            <form method="post">
+                {% if error %}
+                    <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                {% endif %}
+
+                {% if app.user %}
+                    <div class="mb-3">
+                        You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
+                    </div>
+                {% endif %}
+
+                <!-- trouver un template bootstrap login -->
+
+
+                    <div class="d-flex align-items-center mb-3 pb-1">
+                        <!--i class="fas fa-cubes fa-2x me-3" style="color: #ff6219;"></i-->
+                        <img src="{{ asset('img/llogo.jpeg') }}"
+                            alt="login form" 
+                            class="img-fluid" 
+                            style="border-radius: 1rem 0 0 1rem;" 
+                        />
+
+                    </div>
+
+                    <h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">Connexion au panneau d'administration</h5>
+
+
+                <label for="inputUsername">Nom utilisateur</label>
+                <input type="text" value="{{ last_username }}" name="_username" id="inputUsername" class="form-control mb-3" autocomplete="username" required autofocus>
+                <label for="inputPassword">Mot de Pass</label>
+                <div class="input-group mb-3">
+                 <span class="input-group-text"><i class="far fa-eye" id="togglePassword" ></i></span>
+                <input type="password" name="_password" id="inputPassword" class="form-control" autocomplete="current-password" required>
+                
+                </div>
+
+                <input type="hidden" name="_csrf_token"
+                    value="{{ csrf_token('authenticate') }}"
+                >
+
+                <button class="btn btn-primary btn-lg btn-block mt-3" type="submit">
+                    Connnecter
+                </button>
+            </form>
+
+
+
+              </div>
+            </div>
+          </div>
         </div>
-    {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
 
-    <!-- trouver un template bootstrap login -->
 
-    <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-    <label for="inputUsername">Username</label>
-    <input type="text" value="{{ last_username }}" name="_username" id="inputUsername" class="form-control" autocomplete="username" required autofocus>
-    <label for="inputPassword">Password</label>
-    <input type="password" name="_password" id="inputPassword" class="form-control" autocomplete="current-password" required>
+{% endblock %}
 
-    <input type="hidden" name="_csrf_token"
-           value="{{ csrf_token('authenticate') }}"
-    >
 
-    <button class="btn btn-lg btn-primary" type="submit">
-        Sign in
-    </button>
-</form>
+{% block javascripts %}
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-bootstrap/0.5pre/js/jquery-1.8.3.min.js">
+
+    </script>
+    
+    <script>
+
+        $(document).ready(function () {
+            
+            const togglePassword = document.querySelector("#togglePassword");
+            const password = document.querySelector("#inputPassword");
+    
+            togglePassword.addEventListener("click", function () {
+            
+            // toggle the type attribute
+            const type = password.getAttribute("type") === "password" ? "text" : "password";
+            password.setAttribute("type", type);
+            // toggle the eye icon
+            this.classList.toggle('fa-eye');
+            this.classList.toggle('fa-eye-slash');
+            });
+        });
+
+
+    </script>
 {% endblock %}

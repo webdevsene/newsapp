@@ -5,13 +5,14 @@ import { Paper, Typography, Button, CardMedia } from '@mui/material';
 import ResponsiveAppBar from "./ResponsiveAppBar";
 import ReactMarkdown from 'react-markdown';
 import "./../../css/blogposts.css";
+import Footer from "./Footer";
 
 
 function PostDetails() {
 
     const {id} = useParams();
 
-    const [post, setPost] = useState({titre:"", featuredText:"", contenu:"", createdAt:"", url_image:""});
+    const [post, setPost] = useState({titre:"", featuredText:"", contenu:"", createdAt:"", url_image:"", createdby:""});
 
     useEffect(() => {
 
@@ -53,7 +54,7 @@ function PostDetails() {
                                         {/*<!-- Post title-->*/}
                                         <h1 className="fw-bolder mb-1">{post.titre}</h1>
                                         {/*<!-- Post meta content-->*/}
-                                        <div className="text-muted fst-italic mb-2">Par {`author`} le {new Date(post.createdAt).toLocaleDateString('fr-FR')}</div>
+                                        <div className="text-muted fst-italic mb-2">Par {post.createdby} le {new Date(post.createdAt).toLocaleDateString('fr-FR')}</div>
                                         {/*<!-- Post categories-->*/}
                                         <a className="badge bg-secondary text-decoration-none link-light" href="#!">Categorie Categorie</a>
                                         <a className="badge bg-secondary text-decoration-none link-light" href="#!">Freebies</a>
@@ -170,9 +171,10 @@ function PostDetails() {
                 </div>
             )}
 
-
+            <Footer/>
         </>
     );
+
 }
 
 export default PostDetails;

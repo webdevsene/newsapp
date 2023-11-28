@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Article;
+use Doctrine\ORM\EntityManagerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
@@ -96,6 +97,17 @@ class ArticleCrudController extends AbstractCrudController
 
         
     }
+
+
+    public function persistEntity(EntityManagerInterface $entityManager, $entityInstance): void
+    {
+        if (!$entityInstance instanceof Article) return;
+        
+        $entityInstance->setCreatedBy($this->getUser());
+
+        parent::persistEntity($entityManager, $entityInstance);
+    }
+
 
 
 }
