@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Article;
+use App\Repository\ArticleRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -138,6 +140,51 @@ class ArticleController extends AbstractController
     
             return $this->json($th);
         }
+    }
+
+
+    /**
+     * getHeadlines permet de recuperer les quatre derniers post avec l'etiquette UNE
+     */
+    #[Route("/headlines",name:"app_headlines", methods:["GET", "POST"])]
+    public function getHeadlines(ArticleRepository $articleRepository): JsonResponse
+    {
+        $headlines = $articleRepository->findHeadlines();
+
+        $data = []; $response = [];
+
+        try {
+            foreach ($headlines as $item) {
+                $data [] = [
+                    'id' => $item->getId(),
+                    'titre'        => $item->getTitre(),
+                    'featuredText'     => $item->getFeaturedText(),
+                    "contenu"      => $item->getContenu(),
+                    "createdAt"  => $item->getCreatedAt(),    
+                    "categorie"  => $item->getCategories() != null ? $item->getCategories()->getLibelle() : "RAS",    
+                    "url_image"  =>  $item->getImage(),
+                    "pubDate"  => $item->getPublishedAt(),
+                    "etiquette"  => $item->getEtiquettes() != null ? $item->getEtiquettes()->getLibelle(): "PAS",
+                    "createdby" => $item->getCreatedBy() != null ? $item->getCreatedBy()->getNom()." ".$item->getCreatedBy()->getPrenom() : "pengouin" ,
+
+                ];
+            }
+
+            
+            $response["data"] = $data;
+    
+            return $this->json($response);
+
+
+        } catch (\Throwable $th) {
+            $th = [
+                'status' => $th->getCode(),
+                'errors' => $th->getMessage(),
+                ];
+    
+            return $this->json($th);
+        }
+
     }
 
 }

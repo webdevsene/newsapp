@@ -21,6 +21,25 @@ class ArticleRepository extends ServiceEntityRepository
         parent::__construct($registry, Article::class);
     }
 
+    // ...
+
+    public function findHeadlines(): array
+    {
+        $etiquette = 1;
+
+        $qb = $this->createQueryBuilder('a')
+            ->orderBy('a.createdAt', 'DESC')
+            ->setMaxResults(4)
+            ->leftJoin('a.etiquettes', 'et')
+            ->leftJoin('a.categories', 'ca')
+            ->andWhere('et.id = :param')
+            ->setParameter('param', 1)
+            ->getQuery()
+            ->getResult();
+        // Exemple : Retourne les 4 derniers articles à la Une
+        return $qb;
+    }
+
 //    /**
 //     * @return Article[] Returns an array of Article objects
 //     */

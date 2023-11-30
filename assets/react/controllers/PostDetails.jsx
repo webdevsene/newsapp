@@ -6,7 +6,7 @@ import ResponsiveAppBar from "./ResponsiveAppBar";
 import ReactMarkdown from 'react-markdown';
 import "./../../css/blogposts.css";
 import Footer from "./Footer";
-
+import ReactHtmlParser from 'html-react-parser';
 
 function PostDetails() {
 
@@ -41,7 +41,7 @@ function PostDetails() {
             <ResponsiveAppBar/>
 
             {post && (
-                <div>
+                <>
 
                     {/*<!-- Page content-->*/}
                     <div className="container mt-5">
@@ -73,7 +73,7 @@ function PostDetails() {
                                     {/*<!-- Post content-->*/}
                                     <section className="mb-5">
                                         <p className="fs-5 mb-4">{post.featuredText}</p>
-                                        <p className="fs-5 mb-4">{decodeHtml(post.contenu)} </p>
+                                        <p className="fs-5 mb-4">{ReactHtmlParser(decodeHtml(post.contenu)) } </p>
                                     </section>
                                 </article>
                                 {/*<!-- Comments section-->*/}
@@ -168,7 +168,7 @@ function PostDetails() {
                         </div>
                     </div>
 
-                </div>
+                </>
             )}
 
             <Footer/>

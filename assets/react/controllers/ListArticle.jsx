@@ -27,7 +27,6 @@ function ListArticle() {
     const fetchListArticle = () => {
         axios.get('/api/article')
         .then(function (response) {
-            console.log(response);
             setListArticle(response.data);
 
         })

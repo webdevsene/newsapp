@@ -61,7 +61,9 @@ const itemData = [
       
     const [grandeUnes, setGrandeUnes] = useState([]);
 
-    useEffect(()=>{
+    const [headlines, setHeadlines] = useState([]);
+
+    /*useEffect(()=>{
         axios.get('/api/postsgrandeune')
              .then(result => {
                  setGrandeUnes(result.data);
@@ -71,7 +73,29 @@ const itemData = [
              });
 
              
+    }, []);*/
+
+
+    useEffect(()=>{
+
+      const req1 = axios.get('/api/postsgrandeune');
+      const req2 = axios.get('/api/headlines');
+
+      Promise.all([req1, req2])
+             .then(result => {
+                setGrandeUnes(result[0].data);
+                setHeadlines(result[1].data);
+
+             })
+             .catch(errors => {
+                console.error('Erreurs lors des requêtes Axios:', errors);
+            });
+
+             
     }, []);
+
+
+
 
 
     return (
@@ -111,28 +135,33 @@ const itemData = [
                 <div className=" p-0 col-sm-6">
 
                                     <ImageList >
-                                        {itemData.map((item) => (
-                                            <ImageListItem key={item.img}>
-                                            <img
-                                                srcSet={`${item.img}?w=248&fit=crop&auto=format&dpr=2 2x`}
-                                                src={`${item.img}?w=248&fit=crop&auto=format`}
-                                                alt={item.title}
-                                                loading="lazy"
-                                            />
-                                            <ImageListItemBar
-                                                title={item.title}
-                                                subtitle={item.author}
-                                                actionIcon={
-                                                <IconButton
-                                                    sx={{ color: 'rgba(255, 255, 255, 0.54)' }}
-                                                    aria-label={`info about ${item.title}`}
-                                                >
-                                                    <InfoIcon />
-                                                </IconButton>
-                                                }
-                                            />
-                                            </ImageListItem>
-                                        ))}
+                                        {headlines["data"] && headlines["data"].map(item => {
+
+                                          return (
+                                            <>
+                                              <ImageListItem key={`id-${item.etiquette}`}>
+                                              <img
+                                                  srcSet={`/uploads/posts/${item.url_image}`}
+                                                  src={`/uploads/posts/${item.url_image}`}
+                                                  alt={item.titre}
+                                                  loading="lazy"
+                                              />
+                                              <ImageListItemBar
+                                                  title={item.titre}
+                                                  subtitle={item.createdby}
+                                                  actionIcon={
+                                                  <IconButton
+                                                      sx={{ color: 'rgba(255, 255, 255, 0.54)' }}
+                                                      aria-label={`info about ${item.titre}`}
+                                                  >
+                                                      <InfoIcon />
+                                                  </IconButton>
+                                                  }
+                                              />
+                                              </ImageListItem>
+                                            </>
+                                          )
+                                        })}
                                     </ImageList>
 
                 </div>
