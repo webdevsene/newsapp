@@ -3,9 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\Article;
+use App\Entity\Commentaire;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -50,10 +52,38 @@ class CommentaireController extends AbstractController
                 'id' => $comment->getId(),
                 'contenu' => $comment->getContenu(),
                 'createdAt' => $comment->getCreatedAt()->format('Y-m-d H:i:s'),
+                'createdBy' => $comment->getUser() != "" ? $comment->getUser()->getPrenom() : 'mbonate',
                 // Ajoutez d'autres propriétés de commentaire si nécessaire
             ];
         }
 
         return new JsonResponse(['comments' => $commentsArray]);
+    }
+
+
+    /**
+     * Ajouter un commentaire
+     * celà necessite une api /service pour mapper les donnees en bd
+     * cette methode permet de repondre à cette exigence
+     */
+    #[Route("/comments/add", name:"app_comment_add", methods:["POST"])]
+    public function ajouterComment(Request $request): Response
+    {
+        // Créez un nouvel objet Comment
+        $comment = new Commentaire();
+        $comment->setContenu($request->request->get('contenu'));
+        $comment->setUser($this->getUser()); // Assurez-vous d'avoir un système d'authentification en place
+
+        //recuperer l'article correspondant 
+        $article = $this->query->getRepository(Article::class)->find($request->request->get('article_id'));
+
+        $comment->setArticle($article);
+        $comment->setCreatedAt(new \DateTime());
+
+        // Enregistrez le commentaire dans la base de données
+        $this->query->persist($comment);
+        $this->query->flush();
+
+        return new JsonResponse(['message' => 'Commentaire ajouté avec succès.'], 201);
     }
 }

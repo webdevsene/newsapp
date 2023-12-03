@@ -7,15 +7,16 @@ import ReactMarkdown from 'react-markdown';
 import "./../../css/blogposts.css";
 import Footer from "./Footer";
 import ReactHtmlParser from 'html-react-parser';
+import AddComment from "./AddComment";
 
 function PostDetails() {
 
     const {id} = useParams();
 
-    const [post, setPost] = useState({titre:"", featuredText:"", contenu:"", createdAt:"", url_image:"", createdby:""});
+    const [post, setPost] = useState({titre:"", featuredText:"", contenu:"", createdAt:"", url_image:"", createdBy:""});
 
 
-    const [comments, setComments] = useState({id:"", contenu:"", createdAt:""});
+    const [comments, setComments] = useState({id:"", contenu:"", createdAt:"", createdBy:""});
 
     useEffect(() => {
 
@@ -64,7 +65,7 @@ function PostDetails() {
                                     {/*<!-- Post header-->*/}
                                     <header className="mb-4">
                                         {/*<!-- Post title-->*/}
-                                        <h1 className="fw-bolder mb-1">{post.titre}</h1>
+                                        <h1 className="fs-4 fw-bolder mb-1">{post.titre}</h1>
                                         {/*<!-- Post meta content-->*/}
                                         <div className="text-muted fst-italic mb-2">Par {post.createdby} le {new Date(post.createdAt).toLocaleDateString('fr-FR')}</div>
                                         {/*<!-- Post categories-->*/}
@@ -85,7 +86,7 @@ function PostDetails() {
                                     {/*<!-- Post content-->*/}
                                     <section className="mb-5">
                                         <p className="fs-5 mb-4">{post.featuredText}</p>
-                                        <p className="fs-5 mb-4">{ReactHtmlParser(decodeHtml(post.contenu)) } </p>
+                                        {ReactHtmlParser(decodeHtml(post.contenu)) } 
                                     </section>
                                 </article>
 
@@ -96,8 +97,8 @@ function PostDetails() {
                                     <section className="mb-5">
                                         <div className="card bg-light">
                                             <div className="card-body">
-                                                {/*<!-- Comment form-->*/}
-                                                <form className="mb-4"><textarea className="form-control" rows="3" placeholder="Join the discussion and leave a comment!"></textarea></form>
+                                                
+                                                <AddComment  key={`idComment-${post.id}`} article_id={id}/>
 
                                                 {/*<!-- Single comment-->*/}
                                                 
@@ -107,7 +108,7 @@ function PostDetails() {
                                                             <div className="d-flex mt-3">
                                                                 <div className="flex-shrink-0"><img className="rounded-circle" src="https://www.gravatar.com/avatar/$hashedEmail?s=50" alt="..." /></div>
                                                                 <div className="ms-3">
-                                                                    <div className="fw-bold">Commenter author</div>
+                                                                    <div className="fw-bold">De {clef.createdBy}</div>
                                                                         {clef.contenu}
                                                                 </div>
                                                             </div>
