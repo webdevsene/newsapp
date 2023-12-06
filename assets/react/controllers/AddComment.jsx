@@ -3,14 +3,38 @@ import { createRoot } from "react-dom/client";
 import { Link, BrowserRouter as Router, Routes, Route, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
 import axios from "axios";
+import Registermodal from "./regiter/Registermodal";
 
 
-const AddComment = ({ article_id }) => {
+const AddComment = ({ article_id, userData  }) => {
 
 
     const [contenu, setContenu] = useState('');
 
     const [isSaving, setIsSaving] = useState(false);
+
+
+    const [isModalOpen, setModalOpen] = useState(false);
+
+    const handleOpenModal = () => {
+
+        console.log(userData);
+
+        /**ici on peut mettre le test if app.user open modal else doanythink */
+        if (userData ) {
+            setModalOpen(true);
+            
+        }else{
+
+        }
+    };
+  
+    const handleCloseModal = () => {
+      setModalOpen(false);
+    };
+
+
+
 
     const saveRecord = () => {
         setIsSaving(true);
@@ -41,12 +65,14 @@ const AddComment = ({ article_id }) => {
                      Swal.fire({
                          position: "top-end",
                          icon: "success",
-                         title: "Your work has been saved",
+                         title: "Votre commentaire est ajouté avec succès",
                          showConfirmButton: true,
                          timer: 1500
                      });
                      setIsSaving(false);
-                     setContenu('');                      
+                     setContenu('');
+                     
+                     window.location.reload(true);
                  })
                  .catch(function (error) {
                     Swal.fire({
@@ -65,8 +91,6 @@ const AddComment = ({ article_id }) => {
 
 
     const handleUser = () => {
-
-        
 
 
         Swal.fire({
@@ -87,7 +111,7 @@ const AddComment = ({ article_id }) => {
                         rows="3" 
                         placeholder="Envoyer un commentaire"
                         onChange={(event) => {setContenu(event.target.value)}}
-                        onClick={handleUser}
+                        onClick={handleOpenModal}
                         value={contenu}
                         id="contenu"
                         name="contenu"
@@ -95,14 +119,19 @@ const AddComment = ({ article_id }) => {
                 </textarea>
 
                 <button type="button"
-                        className="btn btn-outline-primary float-right"
+                        className="btn btn-outline-danger float-right"
                         disabled={isSaving}
                         onClick={saveRecord}
                 >
-                    Envoyer
+                    <i className="fa fa-paper-plane"></i> Envoyer
                 </button>
                 
             </form>
+
+            {/* Composant modal intégré */}
+            <Registermodal isOpen={isModalOpen} onClose={handleCloseModal} />
+
+            
         </>
     )
 }

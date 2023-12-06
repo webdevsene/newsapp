@@ -1,19 +1,23 @@
 import React, { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import axios from "axios";
-import { Paper, Typography, Button, CardMedia } from '@mui/material';
+import { Paper, Typography, Button, CardMedia, Divider } from '@mui/material';
 import ResponsiveAppBar from "./ResponsiveAppBar";
 import ReactMarkdown from 'react-markdown';
 import "./../../css/blogposts.css";
 import Footer from "./Footer";
 import ReactHtmlParser from 'html-react-parser';
 import AddComment from "./AddComment";
+import ForumIcon from '@mui/icons-material/Forum';
+import SmsIcon from '@mui/icons-material/Sms';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import CategoryIcon from '@mui/icons-material/Category';
 
 function PostDetails() {
 
     const {id} = useParams();
 
-    const [post, setPost] = useState({titre:"", featuredText:"", contenu:"", createdAt:"", url_image:"", createdBy:""});
+    const [post, setPost] = useState({titre:"", featuredText:"", contenu:"", categorie:"", createdAt:"", url_image:"", createdBy:"", commentsCount:0, viewCount:0});
 
 
     const [comments, setComments] = useState({id:"", contenu:"", createdAt:"", createdBy:""});
@@ -69,10 +73,8 @@ function PostDetails() {
                                         {/*<!-- Post meta content-->*/}
                                         <div className="text-muted fst-italic mb-2">Par {post.createdby} le {new Date(post.createdAt).toLocaleDateString('fr-FR')}</div>
                                         {/*<!-- Post categories-->*/}
-                                        <a className="badge bg-secondary text-decoration-none link-light" href="#!">Categorie Categorie</a>
-                                        <a className="badge bg-secondary text-decoration-none link-light" href="#!">Freebies</a>
-                                        <a className="badge bg-secondary text-decoration-none link-light" href="#!">Nombre de vue</a>
-                                        <a className="badge bg-secondary text-decoration-none link-light" href="#!">Nombre de commentaires</a>
+                                        <a className="badge bg-secondary text-decoration-none link-light mx-1" href="#!"> <VisibilityIcon/>  {post.viewCount} vues</a>
+                                        <a className="badge bg-secondary text-decoration-none link-light" href="#!"> <CategoryIcon/> {post.categorie}</a>
                                     </header>
                                     {/*<!-- Preview image figure-->*/}
                                     <figure className="mb-4">
@@ -91,14 +93,27 @@ function PostDetails() {
                                 </article>
 
 
+                                {/**ici en-tête du box commentaire */}
+                                <h5 className=""><ForumIcon/> {post.commentsCount} Commentaire{post.commentsCount > 1 ? 's' : ''} </h5>
+                                <hr 
+                                    style={{
+                                        background: "#F6432D",
+                                        height: "2px",
+                                        border: "none",
+                                    }}
+                                
+                                />
+                                <Divider/>
+
                                 {/*<!-- Comments section-->*/}
 
                                 {comments && (
                                     <section className="mb-5">
                                         <div className="card bg-light">
                                             <div className="card-body">
+                                                <h5><SmsIcon/> Laisser un commentaire</h5>
                                                 
-                                                <AddComment  key={`idComment-${post.id}`} article_id={id}/>
+                                                <AddComment  key={`idComment-${post.id}`} article_id={id} />
 
                                                 {/*<!-- Single comment-->*/}
                                                 
@@ -108,7 +123,7 @@ function PostDetails() {
                                                             <div className="d-flex mt-3">
                                                                 <div className="flex-shrink-0"><img className="rounded-circle" src="https://www.gravatar.com/avatar/$hashedEmail?s=50" alt="..." /></div>
                                                                 <div className="ms-3">
-                                                                    <div className="fw-bold">De {clef.createdBy}</div>
+                                                                    <div className="fw-bold">De {clef.createdBy}, <small className="text-muted fst-italic">le {clef.createdAt}</small></div> 
                                                                         {clef.contenu}
                                                                 </div>
                                                             </div>

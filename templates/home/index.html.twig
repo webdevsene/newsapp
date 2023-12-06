@@ -6,4 +6,15 @@
 
     <div id="app">
     </div>
+
+{% endblock %}
+
+{% block javascript %}
+    {% if app.user %}
+        <script>
+            const userData = {{ app.user|json_encode|raw }} ;
+        </script>
+        <script src="{{ asset('/assets/react/controllers/AddComment.jsx') }}"></script>
+    {% endif %}
+    
 {% endblock %}

@@ -59,7 +59,7 @@ function ListArticle() {
 
                                             <Card key={keys} sx={{ mx: 1, mb: 3, maxWidth: 305 }}>
                                                     <CardMedia
-                                                    sx={{ height: 140 }}
+                                                    sx={{ height: 140}}
                                                     image={`/uploads/posts/${res.url_image}`}
 
                                                     title="green iguana/"

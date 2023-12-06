@@ -74,11 +74,15 @@ class Article
     #[ORM\OneToMany(mappedBy: 'article', targetEntity: Commentaire::class)]
     private Collection $commentaires;
 
+    #[ORM\OneToMany(mappedBy: 'article', targetEntity: ArticleView::class)]
+    private Collection $articleViews;
+
     public function __construct() {
         $this->id = uniqid();
         $this->createdAt = new \DateTime();
         $this->updatedAt = new \DateTime();
         $this->commentaires = new ArrayCollection();
+        $this->articleViews = new ArrayCollection();
     }
 
     public function getId(): ?string
@@ -306,6 +310,36 @@ class Article
             // set the owning side to null (unless already changed)
             if ($commentaire->getArticle() === $this) {
                 $commentaire->setArticle(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ArticleView>
+     */
+    public function getArticleViews(): Collection
+    {
+        return $this->articleViews;
+    }
+
+    public function addArticleView(ArticleView $articleView): static
+    {
+        if (!$this->articleViews->contains($articleView)) {
+            $this->articleViews->add($articleView);
+            $articleView->setArticle($this);
+        }
+
+        return $this;
+    }
+
+    public function removeArticleView(ArticleView $articleView): static
+    {
+        if ($this->articleViews->removeElement($articleView)) {
+            // set the owning side to null (unless already changed)
+            if ($articleView->getArticle() === $this) {
+                $articleView->setArticle(null);
             }
         }
 

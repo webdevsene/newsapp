@@ -51,9 +51,10 @@ class CommentaireController extends AbstractController
             $commentsArray[] = [
                 'id' => $comment->getId(),
                 'contenu' => $comment->getContenu(),
-                'createdAt' => $comment->getCreatedAt()->format('Y-m-d H:i:s'),
-                'createdBy' => $comment->getUser() != "" ? $comment->getUser()->getPrenom() : 'mbonate',
+                'createdAt' => $comment->getCreatedAt()->format('d-m-Y H:i'),
+                'createdBy' => $comment->getUser() != "" ? $comment->getUser()->getPrenom().' '.$comment->getUser()->getNom() : 'mbonate anonymous',
                 // Ajoutez d'autres propriétés de commentaire si nécessaire
+                
             ];
         }
 

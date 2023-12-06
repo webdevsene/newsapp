@@ -3,10 +3,12 @@
 namespace App\Controller;
 
 use App\Entity\Article;
+use App\Entity\ArticleView;
 use App\Repository\ArticleRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -62,9 +64,14 @@ class ArticleController extends AbstractController
     /**
      * Cette api methode sert à obtenir un post
      */
-    #[Route("/article/{id}", name: "app_article_show", methods:["GET"])]
-    public function show(EntityManagerInterface $doctrine, $id=""): Response
+    #[Route("/article/{id}", name: "app_article_show", methods:["GET", "POST"])]
+    public function show(EntityManagerInterface $doctrine, $id="", Request $request): Response
     {
+
+
+        $ipAdresse = $request->getClientIp();
+
+
         if (!$id) {
   
             return $this->json('No ressource found for id : [' . $id . "]", 404);
@@ -79,6 +86,23 @@ class ArticleController extends AbstractController
   
             return $this->json('No ressource found for id : [' . $id . "]", 404);
         }
+
+
+        // Enregistrer la vue dans la base de données
+        $postView = new ArticleView();
+        $postView->setArticle($res);
+        $postView->setIpAdress($ipAdresse);
+        $postView->setCreatedAt(new \DateTime());
+
+        $doctrine->persist($postView);
+        $doctrine->flush();
+
+        // count comments
+        $commentsCount = $res->getCommentaires()->count();
+        $viewCount = $res->getArticleViews()->count();
+
+
+
   
         $data =  [
             'id' => $res->getId(),
@@ -91,6 +115,9 @@ class ArticleController extends AbstractController
             "pubDate"  => $res->getPublishedAt(),
             "etiquette"  => $res->getEtiquettes() != null ? $res->getEtiquettes()->getLibelle(): "PAS",
             "createdby" => $res->getCreatedBy() != null ? $res->getCreatedBy()->getNom()." ".$res->getCreatedBy()->getPrenom() : "pengouin" ,
+
+            'commentsCount' => $commentsCount,
+            'viewCount' => $viewCount,
         ];
           
         return $this->json($data, 200);
