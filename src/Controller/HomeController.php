@@ -19,12 +19,11 @@ class HomeController extends AbstractController
         ]);
     }
 
-    #[Route('/welcome', name: 'app_welcome')]
+    #[Route('/', name: 'app_welcome', methods:["GET"])]
     public function welcome(): Response
     {
-        return $this->render('home/welcome.html.twig', [
-            'controller_name' => 'HomeController',
-        ]);
+        return $this->redirectToRoute('app_home', [], 302);
+        
     }
 
 

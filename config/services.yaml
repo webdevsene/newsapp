@@ -7,6 +7,8 @@ parameters:
     medias_directory: /uploads/posts
     # uploads_directory: posts/
 
+    NEWSDATA_API_KEY: '%env(NEWSDATA_API_KEY)%'
+
 services:
     # default configuration for services in *this* file
     _defaults:

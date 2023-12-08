@@ -6,6 +6,7 @@ use App\Entity\Article;
 use App\Entity\ArticleView;
 use App\Repository\ArticleRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use NewsdataIO\NewsdataApi;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -211,6 +212,27 @@ class ArticleController extends AbstractController
     
             return $this->json($th);
         }
+
+    }
+
+    
+    /**
+     * cette api est un point de terminaison de notre appli pour recuperer les News trending de la librairie
+     * Newsdata.io
+     */
+    #[Route('/trendsnews', name: 'app_trends_news')]
+    public function getTrendsNewsDataIO(): JsonResponse
+    {
+        $newsdataApiObj = new NewsdataApi($this->getParameter('NEWSDATA_API_KEY'));
+
+        // Pass your desired strings in an array with unique key
+
+        $data = array("country" => "sn", "category" =>"top");
+
+        $response = $newsdataApiObj->get_latest_news($data);
+
+        return $this->json($response);
+
 
     }
 

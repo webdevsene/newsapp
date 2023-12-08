@@ -29,7 +29,7 @@ class ArticleRepository extends ServiceEntityRepository
 
         $qb = $this->createQueryBuilder('a')
             ->orderBy('a.createdAt', 'DESC')
-            ->setMaxResults(4)
+            ->setMaxResults(2)
             ->leftJoin('a.etiquettes', 'et')
             ->leftJoin('a.categories', 'ca')
             ->andWhere('et.id = :param')

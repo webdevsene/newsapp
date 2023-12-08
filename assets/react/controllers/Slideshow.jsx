@@ -105,66 +105,79 @@ const itemData = [
 
         <div className="p-0 container">
             <div className="row m-0">
-                <div className="p-0 col-sm-6">
 
 
-                        <div className="slide-container" >
+                <div className="p-0 col-sm-8">
 
-                            <Fade>
-                                {grandeUnes["data"] ?  grandeUnes['data'].map(fadeImage => {
-                                    return (<>
-                                                                                        
-                                        <div key={`bann-${fadeImage.id}`}>
-                                            <img style={{ width: '100%', height: 328 }} 
-                                                 src={`/uploads/posts/${fadeImage.url_image}`}
-                                                 loading="lazy"
-                                            />
+                  <div className="slide-container" >
 
-                                            <ImageListItemBar
-                                                title={fadeImage.titre}
-                                                subtitle={`@${fadeImage.etiquette}`}
-                                            />                                        
-                                        </div>
-                                    </>)
-                                }) : ""}                                
-                            </Fade>
-                                
-                        </div>
+                      <Fade>
+                          {grandeUnes["data"] ?  grandeUnes['data'].map(fadeImage => {
+                              return (<>
+                                                                                  
+                                  <div>
+                                      <img style={{ width: '100%', height: '100%' }} 
+                                          src={`/uploads/posts/${fadeImage.url_image}`}
+                                          loading="lazy"
+                                      />
+
+                                      <ImageListItemBar
+                                          title={fadeImage.titre}
+                                          subtitle={`@${fadeImage.etiquette}`}
+                                      />                                        
+                                  </div>
+                              </>)
+                          }) : ""}                                
+                      </Fade>
+                          
+                  </div>
                 </div>
 
-                <div className=" p-0 col-sm-6">
 
-                                    <ImageList >
-                                        {headlines["data"] && headlines["data"].map(item => {
+                <div className="p-0 col-sm-4 mt-1">
 
-                                          return (
-                                            <>
-                                              <ImageListItem key={`id-${item.etiquette}`}>
-                                              <img
-                                                  srcSet={`/uploads/posts/${item.url_image}`}
-                                                  src={`/uploads/posts/${item.url_image}`}
-                                                  alt={item.titre}
-                                                  loading="lazy"
-                                              />
-                                              <ImageListItemBar
-                                                  title={item.titre}
-                                                  subtitle={item.createdby}
-                                                  actionIcon={
-                                                  <IconButton
-                                                      sx={{ color: 'rgba(255, 255, 255, 0.54)' }}
-                                                      aria-label={`info about ${item.titre}`}
-                                                  >
-                                                      <InfoIcon />
-                                                  </IconButton>
-                                                  }
-                                              />
-                                              </ImageListItem>
-                                            </>
-                                          )
-                                        })}
-                                    </ImageList>
+                    {headlines["data"] && headlines["data"].map(item => {
+                      
+                      return (
+                        <>
+                          <div className='row'>
+
+                          <ImageListItem cols={1} rows={2}>
+
+
+                            <img
+                                srcSet={`/uploads/posts/${item.url_image}`}
+                                src={`/uploads/posts/${item.url_image}`}
+                                alt={item.titre}
+                                loading="lazy"
+                                style={{ width: '100%', height: '100%'}}
+                            />
+
+                            <a href={`/site/postdetails/${item.id}`}>
+
+                              <ImageListItemBar
+                                  title={item.titre}
+                                  subtitle={item.createdby}
+                                  position='bottom'
+                                  actionIcon={
+                                  <IconButton
+                                      sx={{ color: 'rgba(255, 255, 255, 0.54)' }}
+                                      aria-label={`info about ${item.titre}`}
+                                  >
+                                      <InfoIcon />
+                                  </IconButton>
+                                  }
+                              />
+                            </a>
+                            </ImageListItem>
+                          </div>                                               
+                          
+                        </>
+                      )
+                    })}
 
                 </div>
+
             </div>
         </div>
       
