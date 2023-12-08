@@ -4,3 +4,8 @@
 body {
     background-color: white;
 }
+
+/**cette ligne permet de supprimer l'erreur dialog qui s'affiche comme 
+ResizeObserver loop completed with undelivered notifications.
+*/
+iframe#webpack-dev-server-client-overlay{display:none!important}

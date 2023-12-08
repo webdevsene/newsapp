@@ -19,6 +19,9 @@ import TwitterIcon from '@mui/icons-material/Twitter';
 import { TextField } from '@mui/material';
 import HomeIcon from '@mui/icons-material/Home';
 import Slideshow from './Slideshow';
+import { getCurrentDate } from './Hello';
+import axios from 'axios';
+import ReactHtmlParser from 'html-react-parser';
 
 const pages = ['Actualités', 'Economie', 'Sport', 'People', 'Décriptage', 'Contribution'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
@@ -27,6 +30,13 @@ const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+  
+  
+  const [trendsData, setTrendsData] = React.useState([]);
+  const [allElement, setAllElement] = React.useState('');
+
+  let elem ='';
+
     
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -42,6 +52,21 @@ function ResponsiveAppBar() {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+
+
+    React.useEffect(() => {
+
+        axios.get('/api/trendsnews')
+        .then((result) => {
+            console.log(result.data['results']);
+            setTrendsData(result.data['results']);
+            
+        }).catch((err) => {
+            console.log(err);
+        });
+
+
+    }, []);
 
   return (
 
@@ -66,7 +91,7 @@ function ResponsiveAppBar() {
                     <div className="display-4">
                         Rewmi network
                     </div>
-                    <div className="text-secondary"> friday</div>
+                    <div className="text-secondary display-7"> {getCurrentDate('-')} </div>
                 </div>
 
 
@@ -79,7 +104,8 @@ function ResponsiveAppBar() {
 
 
         <div className="border-bottom border-top">
-            <nav className="navbar navbar-expand-md">
+            
+            <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
                 <div className="container-fluid">
                     <div className="collapse navbar-collapse" id="navbarNavDropdown">
                         <ul className="navbar-nav mx-auto">
@@ -124,8 +150,26 @@ function ResponsiveAppBar() {
             </div>
 
             <div className="px-1">
-                <div id="scroll-content" className="text-secondary">
-                    <div> Lorem ipsum dolor sit amet consectetur, adipisicing elit. Repudiandae, eligendi labore perspiciatis harum illo placeat reprehenderit saepe praesentium architecto dolor impedit aliquam hic accusamus inventore aperiam iusto at dicta quia?</div>
+                <div id="scroll-content" className="text-secondary ">
+                    <marquee behavior="scroll" scrollamount="2" width="100%" direction="down" height="40px">
+                        {trendsData && trendsData.map(item => {
+                            
+                            elem += item.title.toString()+'</br>';
+                            return (
+                                <>
+
+                                    
+                                            {ReactHtmlParser(elem)} <br/>
+                                        
+
+                                </>
+                            );
+                        })}
+                        </marquee>
+
+
+
+
                 </div>
             </div>
         </div>
