@@ -28,9 +28,18 @@
                 });
             </script>
 
-            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6761312355349853"
-     crossorigin="anonymous"></script>
+            <!--<script async 
+                    src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6761312355349853"
+                    crossorigin="anonymous">
+            </script>-->
 
+                <script>
+            {% if app.user %}
+                    const userData = {{ app.user|json_encode|raw }} ;
+            {% endif %}
+                </script>
+
+                <script src="{{ asset('assets/app.js') }}"></script>
         {% endblock %}
     </head>
     <body  style="visibility: hidden;">
