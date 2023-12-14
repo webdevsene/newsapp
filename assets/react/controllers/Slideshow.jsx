@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Fade } from 'react-slideshow-image';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
-import { Container } from '@mui/material';
+import { CardMedia, Container } from '@mui/material';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 import ImageListItemBar from '@mui/material/ImageListItemBar';
@@ -121,10 +121,14 @@ const itemData = [
                                           loading="lazy"
                                       />
 
-                                      <ImageListItemBar
-                                          title={fadeImage.titre}
-                                          subtitle={`@${fadeImage.etiquette}`}
-                                      />                                        
+                                      <a href={`/site/postdetails/${fadeImage.id}`}>
+                                        <ImageListItemBar
+                                            title={fadeImage.titre}
+                                            subtitle={ `par @${fadeImage.createdby} dans la catégorie ${fadeImage.categorie}`}
+                                        />                                        
+
+                                      </a>
+
                                   </div>
                               </>)
                           }) : ""}                                
@@ -134,30 +138,39 @@ const itemData = [
                 </div>
 
 
-                <div className="p-0 col-sm-4 mt-1">
+                <div className="p-0 col-sm-4 mt-0">
 
                     {headlines["data"] && headlines["data"].map(item => {
                       
                       return (
                         <>
-                          <div className='row'>
+                          <div className='mx-0'
+                               style={{ width: '100%'}}
+                          >
 
-                          <ImageListItem cols={1} rows={2}>
+                          <ImageListItem cols={1} rows={2}
+                                         
+                          >
 
 
-                            <img
-                                srcSet={`/uploads/posts/${item.url_image}`}
-                                src={`/uploads/posts/${item.url_image}`}
-                                alt={item.titre}
-                                loading="lazy"
-                                style={{ width: '100%', height: '100%'}}
+                            
+
+                            <CardMedia
+                              sx={{ height: 180}}
+                              image={`/uploads/posts/${item.url_image}`}
+                              
+                              title="green iguana/"
+                              alt={item.titre}
+                              loading="lazy"
+                              
+                              
                             />
 
                             <a href={`/site/postdetails/${item.id}`}>
 
                               <ImageListItemBar
                                   title={item.titre}
-                                  subtitle={item.createdby}
+                                  subtitle={`par ${item.createdby}`}
                                   position='bottom'
                                   actionIcon={
                                   <IconButton
@@ -167,6 +180,7 @@ const itemData = [
                                       <InfoIcon />
                                   </IconButton>
                                   }
+                                 
                               />
                             </a>
                             </ImageListItem>

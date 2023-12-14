@@ -88,8 +88,8 @@ function ResponsiveAppBar() {
                 </div>
 
                 <div className="col-lg-6 col-md-6 text-center">
-                    <div className="display-4">
-                        Rewmi network
+                    <div className="display-6">
+                        L'équilibre notre crédo
                     </div>
                     <div className="text-secondary display-7"> {getCurrentDate('-')} </div>
                 </div>

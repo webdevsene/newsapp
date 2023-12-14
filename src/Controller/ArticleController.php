@@ -40,8 +40,10 @@ class ArticleController extends AbstractController
                         "createdAt"  => $ressource->getCreatedAt(),    
                         "categorie"  => $ressource->getCategories() != null ? $ressource->getCategories()->getLibelle() : "RAS",    
                         "url_image"  =>  $ressource->getImage(),
-                        "pubDate"  => $ressource->getPublishedAt(),
+                        "pubDate"  => $ressource->getPublishedAt()->format('d/m/Y'),
                         "etiquette"  => $ressource->getEtiquettes() != null ? $ressource->getEtiquettes()->getLibelle(): "PAS",
+                        "createdby" => $ressource->getCreatedBy() != null ? $ressource->getCreatedBy()->getNom()." ".$ressource->getCreatedBy()->getPrenom() : "pengouin" ,
+
 
                     ];
             }
@@ -151,6 +153,7 @@ class ArticleController extends AbstractController
                         "url_image"  =>  $ressource->getImage(),
                         "pubDate"  => $ressource->getPublishedAt(),
                         "etiquette"  => $ressource->getEtiquettes() != null ? $ressource->getEtiquettes()->getLibelle(): "PAS",
+                        "createdby" => $ressource->getCreatedBy() != null ? $ressource->getCreatedBy()->getNom()." ".$ressource->getCreatedBy()->getPrenom() : "pengouin" ,
 
                     ];                    
                       
@@ -229,9 +232,20 @@ class ArticleController extends AbstractController
 
         $data = array("country" => "sn", "category" =>"top");
 
-        $response = $newsdataApiObj->get_latest_news($data);
 
-        return $this->json($response);
+        try {
+            $response = $newsdataApiObj->get_latest_news($data);
+
+            return $this->json($response);
+
+        } catch (\Throwable $th) {
+            $th = [
+                'status' => $th->getCode(),
+                'errors' => $th->getMessage(),
+                ];
+    
+            return $this->json($th);
+        }
 
 
     }

@@ -11,6 +11,8 @@ import TextTruncate from 'react-text-truncate';
 import ResponsiveAppBar from "./ResponsiveAppBar";
 import Slideshow from "./Slideshow";
 import Footer from "./Footer";
+import HistoryEduIcon from '@mui/icons-material/HistoryEdu';
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 
 
 function ListArticle() {
@@ -58,18 +60,22 @@ function ListArticle() {
                                     {listArticle.map((res, keys)=>{
                                         return (
 
-                                            <Card key={keys} sx={{ mx: 1, mb: 3, maxWidth: 305 }}>
-                                                    <CardMedia
-                                                    sx={{ height: 140}}
-                                                    image={`/uploads/posts/${res.url_image}`}
+                                            <Card sx={{ mx: 1, mb: 3, maxWidth: 305, paddingLeft: 0 }}>
+                                                    
+                                                    <a href={`/site/postdetails/${res.id}`}>
+                                                        <CardMedia
+                                                            sx={{ height: 140, width: 345}}
+                                                            image={`/uploads/posts/${res.url_image}`}
 
-                                                    title="green iguana/"
-                                                    
-                                                    
-                                                    />
+                                                            title="green iguana/"
+                                                            
+                                                        
+                                                        />
+
+                                                    </a>
                                                     <CardContent>
                                                     
-                                                    <Typography gutterBottom variant="h6" component="div">
+                                                    <Typography gutterBottom variant="inherit" component="div">
                                                         <TextTruncate
                                                             line={2}
                                                             element="span"
@@ -89,8 +95,15 @@ function ListArticle() {
                                                     </Typography>
                                                     </CardContent>
                                                     <CardActions>
-                                                    <Button size="small">Partager</Button>
-                                                    <Button size="small"  href={`/site/postdetails/${res.id}`}>Lire plus</Button>
+                                                            
+                                                        <div className="d-flex justify-content-between">
+                                                            <Button color="error" size="small"  href={`/site/postdetails/${res.id}`}>Lire plus</Button>                                     
+                                                            <p className="card-text mx-2">
+                                                                <small className="text-muted"> <HistoryEduIcon/>{res.createdby}, <CalendarMonthIcon/>{res.pubDate}</small> 
+                                                            </p>
+
+                                                        </div>
+
                                                     </CardActions>
                                                 </Card>
 
