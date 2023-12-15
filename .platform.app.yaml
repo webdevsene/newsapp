@@ -24,9 +24,10 @@ disk: 2048
 
 hooks:
     build: |
-      set -e
+
+      flavor: composer
     deploy: |
-      set -e
+      flavor: composer
 
 web:
   locations: 
