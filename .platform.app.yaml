@@ -8,16 +8,32 @@ name: app
 # (https://docs.platform.sh/languages/php.html#supported-versions)
 # to find the supported versions for the 'php' type.
 type: 'php:8.3'
+build:
+  flavor: composer
+
+variables:
+  env:
+    # Configuration des variables d'environnement pour Symfony
+    APP_ENV: 'prod'
+    APP_DEBUG: 0
+
+dependencies:
+    nodejs:
+      yarn: "*"
 
 # The following block defines a single writable directory, 'web/uploads'
 # The 'source' specifies where the writable mount is. The 'local' source
 # indicates that the mount point will point to a local directory on the
 # application container. The 'source_path' specifies the subdirectory
 # from within the source that the mount should point at. 
+# Les dossiers qui doivent rester accessibles en écriture
 mounts:
-  'web/uploads':
-    source: local
-    source_path: uploads
+  #'web/uploads':
+    #source: local
+    #source_path: uploads
+  "/var/cache": "shared:files/cache"
+  "/var/log": "shared:files/log"
+  "/var/sessions": "shared:files/sessions"
 
 # The size of the persistent disk of the application (in MB).
 disk: 2048
@@ -31,15 +47,24 @@ disk: 2048
 relationships:
     mysql: 'mysql:mysql'
 
+# Actions à exécuter à la construction et au déploiement
 hooks:
     build: |
-
-      flavor: composer
+      set -e
+      yarn install
+      yarn run encore production
+      bin/console assets:install --no-debug
+      bin/console cache:clear
     deploy: |
-      flavor: composer
+      bin/console assets:install --symlink --relative public
+      bin/console cache:clear
 
 web:
   locations: 
     '/': 
-      root: "web"
+      #root: "web"
+      
+      # Dossier public
+      root: "public"
+      # Le contrôleur frontal (qui doit recevoir toutes les requêtes)
       passthru: "/index.php"

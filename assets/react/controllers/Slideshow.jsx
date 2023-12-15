@@ -116,7 +116,7 @@ const itemData = [
                               return (<>
                                                                                   
                                   <div>
-                                      <img style={{ width: '100%', height: '100%' }} 
+                                      <img style={{ width: '100%', height: 360 }} 
                                           src={`/uploads/posts/${fadeImage.url_image}`}
                                           loading="lazy"
                                       />
