@@ -113,7 +113,7 @@ function PostDetails() {
                                             <div className="card-body">
                                                 <h5><SmsIcon/> Laisser un commentaire</h5>
                                                 
-                                                <AddComment  key={`idComment-${post.id}`} article_id={id} />
+                                                <AddComment article_id={id} />
 
                                                 {/*<!-- Single comment-->*/}
                                                 

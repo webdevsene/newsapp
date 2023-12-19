@@ -75,6 +75,7 @@ function ResponsiveAppBar() {
         <div className="p-3 bg-light">
             <div className="row align-items-center">
                 <div className="col-lg-3 col-md-3 d-none d-md-block">
+
                     <div className="">
                         <MenuIcon/>
                         <strong> Rewmi network</strong>
@@ -88,8 +89,8 @@ function ResponsiveAppBar() {
                 </div>
 
                 <div className="col-lg-6 col-md-6 text-center">
-                    <div className="display-4">
-                        Rewmi network
+                    <div className="display-6">
+                        L'équilibre notre crédo
                     </div>
                     <div className="text-secondary display-7"> {getCurrentDate('-')} </div>
                 </div>
@@ -103,11 +104,19 @@ function ResponsiveAppBar() {
         </div>
 
 
-        <div className="border-bottom border-top">
-            
+        <div className="border-bottom border-top">            
             <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
                 <div className="container-fluid">
-                    <div className="collapse navbar-collapse" id="navbarNavDropdown">
+                    
+                    <button className="navbar-toggler" type="button"
+                        data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                        aria-controls="navbarNav" aria-expanded="false"
+                        aria-label="Toggle navigation">
+                        <span className="navbar-toggler-icon"></span>
+                    </button>
+
+
+                    <div className="collapse navbar-collapse" id="navbarNav">
                         <ul className="navbar-nav mx-auto">
 
                             
