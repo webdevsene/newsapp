@@ -1,16 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { Fade } from 'react-slideshow-image';
-import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
-import { Container } from '@mui/material';
-import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 import ImageListItemBar from '@mui/material/ImageListItemBar';
 import IconButton from '@mui/material/IconButton';
 import InfoIcon from '@mui/icons-material/Info';
-import ListArticle from './ListArticle';
+import StarBorderIcon from '@mui/icons-material/StarBorder';
 import axios from 'axios';
-import ResponsiveAppBar from './ResponsiveAppBar';
 
 
 const fadeImages = [
@@ -121,10 +116,15 @@ const itemData = [
                                           loading="lazy"
                                       />
 
-                                      <ImageListItemBar
-                                          title={fadeImage.titre}
-                                          subtitle={`@${fadeImage.etiquette}`}
-                                      />                                        
+
+                                      <a href={`/site/postdetails/${fadeImage.id}`}>
+
+                                        <ImageListItemBar
+                                            title={fadeImage.titre}
+                                            subtitle={`@${fadeImage.etiquette}`}
+                                        />                                        
+
+                                      </a>
                                   </div>
                               </>)
                           }) : ""}                                
@@ -164,7 +164,7 @@ const itemData = [
                                       sx={{ color: 'rgba(255, 255, 255, 0.54)' }}
                                       aria-label={`info about ${item.titre}`}
                                   >
-                                      <InfoIcon />
+                                      <StarBorderIcon />
                                   </IconButton>
                                   }
                               />
