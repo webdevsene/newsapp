@@ -68,3 +68,4 @@ web:
       root: "public"
       # Le contrôleur frontal (qui doit recevoir toutes les requêtes)
       passthru: "/index.php"
+      
