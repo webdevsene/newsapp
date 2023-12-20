@@ -50,7 +50,7 @@ function ListArticle() {
             <Slideshow/>
 
 
-            <div className="container p-0 mt-1">
+            <div className="container p-0 mt-2">
                 <div className="row">
 
                     <div className="col-lg-8">
