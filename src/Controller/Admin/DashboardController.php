@@ -6,6 +6,7 @@ use App\Entity\Article;
 use App\Entity\Category;
 use App\Entity\Media;
 use App\Entity\User;
+use App\Entity\Widget;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
@@ -50,6 +51,7 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Categories', 'fa-solid fa-shapes', Category::class);
         yield MenuItem::linkToCrud('Mediathèque', 'fa-solid fa-photo-film', Media::class);
         yield MenuItem::linkToCrud('Utilisateurs', 'fa-solid fa-user', User::class);
+        yield MenuItem::linkToCrud('Widgets', 'fa-solid fa-user', Widget::class);
 
     }
 

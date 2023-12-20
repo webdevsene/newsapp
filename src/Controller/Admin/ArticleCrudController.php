@@ -33,7 +33,7 @@ class ArticleCrudController extends AbstractCrudController
                 ->setEntityLabelInPlural('articles du site')
                 ->setPageTitle(Crud::PAGE_INDEX, 'Liste des articles ')
                 ->setPageTitle(Crud::PAGE_EDIT, 'Édition de l\'article')
-                ->setDefaultSort(['createdAt' => 'ASC'])
+                ->setDefaultSort(['createdAt' => 'DESC'])
                 ->setPaginatorPageSize(6)
                 ->addFormTheme("@FOSCKEditor/Form/ckeditor_widget.html.twig")
         ;

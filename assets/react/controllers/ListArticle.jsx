@@ -11,8 +11,9 @@ import TextTruncate from 'react-text-truncate';
 import ResponsiveAppBar from "./ResponsiveAppBar";
 import Slideshow from "./Slideshow";
 import Footer from "./Footer";
-import HistoryEduIcon from '@mui/icons-material/HistoryEdu';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import Sidewidgets from "./Sidewidgets";
 
 
 function ListArticle() {
@@ -49,10 +50,10 @@ function ListArticle() {
             <Slideshow/>
 
 
-            <div className="container p-0">
+            <div className="container p-0 mt-1">
                 <div className="row">
 
-                    <div className="col-lg-9">
+                    <div className="col-lg-8">
 
                         <div className="card">
                             <div className="card header">
@@ -65,7 +66,7 @@ function ListArticle() {
                                         {listArticle.map((res, keys)=>{
                                             return (
 
-                                                <Card sx={{ mx: 1, mb: 3, maxWidth: 305, paddingLeft: 0 }}>
+                                                <Card sx={{ mx: 1, mb: 3, maxWidth: 292, paddingLeft: 0 }}>
                                                         
                                                         <a href={`/site/postdetails/${res.id}`}>
                                                             <CardMedia
@@ -103,14 +104,14 @@ function ListArticle() {
                                                                 
                                                             <div className="d-flex justify-content-between">
                                                                 <Button color="error" size="small"  href={`/site/postdetails/${res.id}`}>Lire plus</Button>                                     
-                                                                <p className="card-text mx-2">
-                                                                    <small className="text-muted"> <HistoryEduIcon/>{res.createdby}, <CalendarMonthIcon/>{res.pubDate}</small> 
+                                                                <p className="card-text mx">
+                                                                    <small className="text-muted"><CalendarMonthIcon/>{res.pubDate}, <VisibilityIcon/>{` lu ${res.viewCount} fois`}</small> 
                                                                 </p>
 
                                                             </div>
 
                                                         </CardActions>
-                                                    </Card>
+                                                </Card>
 
                                                 
                                             )
@@ -122,53 +123,9 @@ function ListArticle() {
 
                     </div>
 
-                    {/*<!-- Side widgets-->*/}
-                    <div className="col-lg-3">
-                        {/*<!-- Search widget-->*/}
-                        <div className="card mb-4">
-                            <div className="card-header">Search</div>
-                            <div className="card-body">
-                                <div className="input-group">
-                                    <input className="form-control" type="text" placeholder="Enter search term..." aria-label="Enter search term..." aria-describedby="button-search" />
-                                    <button className="btn btn-primary" id="button-search" type="button">Go!</button>
-                                </div>
-                            </div>
-                        </div>
 
-                        {/** <!-- Categories widget-->
-                         * 
-                        */}
-                        <div className="card mb-4">
-                            <div className="card-header">Categories</div>
-                            <div className="card-body">
-                                <div className="row">
-                                    <div className="col-sm-6">
-                                        <ul className="list-unstyled mb-0">
-                                            <li><a href="#!">Web Design</a></li>
-                                            <li><a href="#!">HTML</a></li>
-                                            <li><a href="#!">Freebies</a></li>
-                                        </ul>
-                                    </div>
-                                    <div className="col-sm-6">
-                                        <ul className="list-unstyled mb-0">
-                                            <li><a href="#!">JavaScript</a></li>
-                                            <li><a href="#!">CSS</a></li>
-                                            <li><a href="#!">Tutorials</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-
-                        {/*#<!-- Side widget-->*/}
-                        {/* Commentaire à l'intérieur des balises JSX */}
-                        <div className="card mb-4">
-                            <div className="card-header">Side Widget</div>
-                            <div className="card-body">You can put anything you want inside of these side widgets. They are easy to use, and feature the Bootstrap 5 card component!</div>
-                        </div>
-                    </div>                    
-
+                    <Sidewidgets/>
+                    
                 </div>
 
             </div>

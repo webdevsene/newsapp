@@ -5,8 +5,11 @@ namespace App\Entity;
 use App\Repository\WidgetRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[ORM\Entity(repositoryClass: WidgetRepository::class)]
+#[Vich\Uploadable]
 class Widget
 {
     #[ORM\Id]
@@ -23,11 +26,17 @@ class Widget
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $urlImage = null;
 
+    #[Vich\UploadableField(mapping: "post_thumbnail", fileNameProperty: "urlImage")]
+    private ?File $imageFile = null;
+
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $urlVideo = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $createdAt = null;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $updatedAt = null;
 
     public function getId(): ?int
     {
@@ -93,4 +102,32 @@ class Widget
 
         return $this;
     }
+
+
+
+    public function setImageFile(?File $image = null): void
+    {
+        $this->imageFile = $image;
+        if ($image) {
+            $this->updatedAt = new \DateTime('now');
+        }
+    }
+ 
+    public function getImageFile(): ?File
+    {
+        return $this->imageFile;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeInterface
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(?\DateTimeInterface $updatedAt): static
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
 }

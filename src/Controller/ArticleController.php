@@ -4,9 +4,11 @@ namespace App\Controller;
 
 use App\Entity\Article;
 use App\Entity\ArticleView;
+use App\Entity\Widget;
 use App\Repository\ArticleRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use NewsdataIO\NewsdataApi;
+use PhpParser\Node\Stmt\TryCatch;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,7 +23,7 @@ class ArticleController extends AbstractController
     {
 
         $posts =  $doctrine->getRepository(Article::class)
-        ->findBy([], array('createdAt'=>'DESC'),6,0);
+        ->findBy([], array('createdAt'=>'DESC'),4,0);
 
 
         $data = [];
@@ -43,7 +45,7 @@ class ArticleController extends AbstractController
                         "pubDate"  => $ressource->getPublishedAt()->format('d/m/Y'),
                         "etiquette"  => $ressource->getEtiquettes() != null ? $ressource->getEtiquettes()->getLibelle(): "PAS",
                         "createdby" => $ressource->getCreatedBy() != null ? $ressource->getCreatedBy()->getNom()." ".$ressource->getCreatedBy()->getPrenom() : "pengouin" ,
-
+                        'viewCount' => $ressource->getArticleViews()->count(),
 
                     ];
             }
@@ -248,6 +250,44 @@ class ArticleController extends AbstractController
         }
 
 
+    }
+
+
+    /**
+     * Cette api nous permet de recuperer les side widget dont les annonces ou publiictes 
+     */
+    #[Route('/widgets', name: 'app_widgets', methods:["GET"])]
+    public function getWidgets(EntityManagerInterface $doctrine) : JsonResponse {
+
+        
+        $widgets =  $doctrine->getRepository(Widget::class)
+        ->findBy([], array('createdAt'=>'DESC'),4,0);
+
+        $data = [];
+
+        try {
+            foreach ($widgets as $key) {
+                $data[] =  [
+                    'id' => $key->getId(),
+                    'titre'        => $key->getTitre(),
+                    "contenu"      => $key->getContenu(),
+                    "urlImage"  =>  $key->getUrlImage(),
+                    "createdAt"  => $key->getCreatedAt(),    
+                    "updatedAt"  => $key->getCreatedAt(),    
+        
+                ];
+            }
+
+            return new JsonResponse(['widgets' => $data], 200);
+        } catch (\Throwable $th) {
+            $th = [
+                'status' => $th->getCode(),
+                'errors' => $th->getMessage(),
+                ];
+    
+            return $this->json($th);
+        }
+        
     }
 
 }
