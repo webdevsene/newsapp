@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Article;
+use App\Entity\CategorieWidget;
 use App\Entity\Category;
 use App\Entity\Media;
 use App\Entity\User;
@@ -51,7 +52,8 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Categories', 'fa-solid fa-shapes', Category::class);
         yield MenuItem::linkToCrud('Mediathèque', 'fa-solid fa-photo-film', Media::class);
         yield MenuItem::linkToCrud('Utilisateurs', 'fa-solid fa-user', User::class);
-        yield MenuItem::linkToCrud('Widgets', 'fa-solid fa-user', Widget::class);
+        yield MenuItem::linkToCrud('Configuration Widgets', 'fa-solid fa-film', Widget::class);
+        yield MenuItem::linkToCrud('Type de Widgets 2', 'fa-solid fa-film', CategorieWidget::class);
 
     }
 

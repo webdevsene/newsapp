@@ -38,6 +38,9 @@ class Widget
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $updatedAt = null;
 
+    #[ORM\ManyToOne(inversedBy: 'widgets')]
+    private ?CategorieWidget $categorieWidget = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -128,6 +131,23 @@ class Widget
         $this->updatedAt = $updatedAt;
 
         return $this;
+    }
+
+    public function getCategorieWidget(): ?CategorieWidget
+    {
+        return $this->categorieWidget;
+    }
+
+    public function setCategorieWidget(?CategorieWidget $categorieWidget): static
+    {
+        $this->categorieWidget = $categorieWidget;
+
+        return $this;
+    }
+
+    public function __toString(): string
+    {
+       return $this->titre; 
     }
 
 }

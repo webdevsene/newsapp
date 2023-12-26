@@ -81,7 +81,7 @@ function ListArticle() {
                                                         </a>
                                                         <CardContent>
                                                         
-                                                        <Typography gutterBottom variant="inherit" component="div">
+                                                        <Typography gutterBottom variant="h5" align="justify" component="div">
                                                             <TextTruncate
                                                                 line={2}
                                                                 element="span"
@@ -92,7 +92,7 @@ function ListArticle() {
                                                             
                                                         </Typography>
                                                             
-                                                        <Typography variant="body2" color="text.secondary">
+                                                        <Typography variant="inherit" align="justify" color="text.secondary">
                                                             <TextTruncate
                                                                 line={3}
                                                                 truncateText="..."

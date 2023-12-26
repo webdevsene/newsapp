@@ -16,6 +16,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class ArticleCrudController extends AbstractCrudController
@@ -28,11 +29,12 @@ class ArticleCrudController extends AbstractCrudController
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
-                ->renderSidebarMinimized()
+                //->renderSidebarMinimized()
                 ->setEntityLabelInSingular('article du site')
                 ->setEntityLabelInPlural('articles du site')
                 ->setPageTitle(Crud::PAGE_INDEX, 'Liste des articles ')
                 ->setPageTitle(Crud::PAGE_EDIT, 'Édition de l\'article')
+                ->setPageTitle(Crud::PAGE_NEW, 'Je crée un article')
                 ->setDefaultSort(['createdAt' => 'DESC'])
                 ->setPaginatorPageSize(6)
                 ->addFormTheme("@FOSCKEditor/Form/ckeditor_widget.html.twig")
@@ -48,36 +50,35 @@ class ArticleCrudController extends AbstractCrudController
 
         return [
 
-            FormField::addPanel()->addCssClass('col-md-8'),
-            TextField::new('titre')->setLabel('Titre de l\'article')
-            ->setColumns('col-sm-9 col-xxl-9'),
-            TextEditorField::new('contenu', 'Contenu')
-            ->setFormType(CKEditorType::class)
-            ->setLabel('Contenu de l\'article')
-            ->hideOnIndex()
-            ->setColumns('col-sm-12 col-xxl-12'),
+            FormField::addPanel('partie gauche')
+                    ->addColumn('col-sm-4 '),
 
             FormField::addPanel('Options article')
+
                     ->addCssClass('col-md-4 sidebar'),
             DateTimeField::new('publishedAt')
-                         ->setLabel('Publier le')
-                         ->setFormat('dd/MM/YYY HH:mm')
-                         ->setColumns('col-sm-12 col-xxl-12'),
+                        ->setRequired(true)
+                        ->setLabel('Publier le')
+                        ->setFormat('dd/MM/YYY HH:mm')
+                        ->setColumns('col-sm-12 col-xxl-12'),
             AssociationField::new('categories')
                             ->setRequired(true)
                             ->setLabel('Rubrique')
                             ->setColumns('col-sm-12 col-xxl-12'),
             
-            TextField::new('featuredText')
+            TextareaField::new('featuredText')
+                ->setRequired(true)
                 ->setLabel('Texte de mise en avant')
                 ->hideOnIndex()
                 ->setColumns('col-sm-12 col-xxl-12'),
                 
             AssociationField::new('etiquettes')
+                            ->setRequired(true)
                             ->setLabel('étiquette')
                             ->setColumns('col-sm-12 col-xxl-12'),
             
             TextareaField::new('imageFile')
+                        ->setRequired(true)
                         ->setLabel('Image de mise en avant')
                         ->setRequired(false)
                         ->setFormType(VichImageType::class)
@@ -91,8 +92,23 @@ class ArticleCrudController extends AbstractCrudController
                         ->setRequired(true),
                         
             BooleanField::new('etat')
-                        ->setLabel('Article en ligne')
-                        ->setHelp('Si cocher l\'article est en ligne à la date de publication.'),
+                ->setRequired(true)
+                ->setLabel('Article en ligne')
+                ->setHelp('Si cocher l\'article est en ligne à la date de publication.'),
+
+            FormField::addPanel()->addColumn('col-sm-8 ')->addCssClass('col-md-8'),
+            TextField::new('titre')->setLabel('Titre de l\'article')
+            ->setColumns('col-sm-9 col-xxl-9')
+            ->setRequired(true),
+            TextEditorField::new('contenu', 'Contenu')
+            ->setRequired(true)
+            ->setFormType(CKEditorType::class)
+            ->setLabel('Contenu de l\'article')
+            ->hideOnIndex()
+            ->setColumns('col-sm-12 col-xxl-12'),
+
+
+        
         ];
 
         

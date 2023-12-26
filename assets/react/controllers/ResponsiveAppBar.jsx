@@ -1,57 +1,32 @@
 import * as React from 'react';
-import {BrowserRouter as Router, Link, Route, Routes } from "react-router-dom";
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import Menu from '@mui/material/Menu';
-import Container from '@mui/material/Container';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import Tooltip from '@mui/material/Tooltip';
-import MenuItem from '@mui/material/MenuItem';
-import AdbIcon from '@mui/icons-material/Adb';
 import MenuIcon from '@mui/icons-material/Menu';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import YouTubeIcon from '@mui/icons-material/YouTube';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import { TextField } from '@mui/material';
 import HomeIcon from '@mui/icons-material/Home';
-import Slideshow from './Slideshow';
 import { getCurrentDate } from './Hello';
 import axios from 'axios';
 import ReactHtmlParser from 'html-react-parser';
-
-const pages = ['Actualités', 'Economie', 'Sport', 'People', 'Décriptage', 'Contribution'];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+import Marquee from "react-fast-marquee";
 
 
 function ResponsiveAppBar() {
-  const [anchorElNav, setAnchorElNav] = React.useState(null);
-  const [anchorElUser, setAnchorElUser] = React.useState(null);
-  
   
   const [trendsData, setTrendsData] = React.useState([]);
-  const [allElement, setAllElement] = React.useState('');
 
-  let elem ='';
 
-    
-  const handleOpenNavMenu = (event) => {
-    setAnchorElNav(event.currentTarget);
-  };
-  const handleOpenUserMenu = (event) => {
-    setAnchorElUser(event.currentTarget);
-  };
+  const marqueeStyle = {
+    width: '100%',
+    overflow: 'hidden',
+    border:'1px solid #ccc',
+    background: 'black',
+    color: 'rgb(202, 255, 195)',
+    display: 'inline-block',
+    padding: '10px 20px',
+    fontsize: '70px',
+   }
 
-  const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
-  };
-
-  const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
-  };
 
 
     React.useEffect(() => {
@@ -89,7 +64,7 @@ function ResponsiveAppBar() {
                 </div>
 
                 <div className="col-lg-6 col-md-6 text-center">
-                    <div className="display-6">
+                    <div className="display-4">
                         L'équilibre notre crédo
                     </div>
                     <div className="text-secondary display-7"> {getCurrentDate('-')} </div>
@@ -102,7 +77,6 @@ function ResponsiveAppBar() {
                 </div>
             </div>
         </div>
-
 
         <div className="border-bottom border-top">            
             <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -124,25 +98,25 @@ function ResponsiveAppBar() {
                                 <a href="/site" className="nav-link mx-2 active" aria-current="page"> <HomeIcon/> </a>
                             </li>
                             <li className="nav-item">
-                                <a href="#" className="nav-link mx-2 ">Actualité</a>
+                                <a href="#" className="nav-link mx-2 fw-bold ">Actualité</a>
                             </li>
                             <li className="nav-item">
-                                <a href="#" className="nav-link mx-2 ">Faits divers</a>
+                                <a href="#" className="nav-link mx-2 fw-bold ">Faits divers</a>
                             </li>
                             <li className="nav-item">
-                                <a href="#" className="nav-link mx-2 ">Economie</a>
+                                <a href="#" className="nav-link mx-2 fw-bold ">Economie</a>
                             </li>
                             <li className="nav-item">
-                                <a href="#" className="nav-link mx-2 ">People</a>
+                                <a href="#" className="nav-link mx-2 fw-bold ">People</a>
                             </li>
                             <li className="nav-item">
-                                <a href="#" className="nav-link mx-2 ">Sport</a>
+                                <a href="#" className="nav-link mx-2 fw-bold ">Sport</a>
                             </li>
                             <li className="nav-item">
-                                <a href="#" className="nav-link mx-2 ">Décryptage</a>
+                                <a href="#" className="nav-link mx-2 fw-bold ">Décryptage</a>
                             </li>
                             <li className="nav-item">
-                                <a href="#" className="nav-link mx-2 " >Contributions</a>
+                                <a href="#" className="nav-link mx-2 fw-bold " >Contributions</a>
                             </li>
                         </ul>
                     </div>
@@ -153,28 +127,35 @@ function ResponsiveAppBar() {
 
 
 
-        <div className="border-bottom d-flex" id="subNavContainer">
+        <div className="border m-5 d-flex " id="subNavContainer">
             <div>
                 <div className="py-2 px-5 bg-danger text-white">Breaking News :</div>
             </div>
 
             <div className="px-1">
                 <div id="scroll-content" className="text-secondary ">
-                    <marquee behavior="scroll" scrollamount="2" width="100%" direction="down" height="40px">
+
+                    <Marquee  style={{  }} >
+
                         {trendsData && trendsData.map(item => {
                             
-                            elem += item.title.toString()+'</br>';
+                            //elem += item.title.toString()+'</br>';
                             return (
                                 <>
-
+                                    <div className='p-2'>
+                                        <a href='#'>
+                                            {ReactHtmlParser(item.title.toString())}
+                                            
+                                        </a>
                                     
-                                            {ReactHtmlParser(elem)} <br/>
-                                        
-
+                                    </div>
+                                    
                                 </>
                             );
                         })}
-                        </marquee>
+
+                        </Marquee>
+
 
 
 
