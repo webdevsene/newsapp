@@ -238,6 +238,8 @@ class ArticleController extends AbstractController
         try {
             $response = $newsdataApiObj->get_latest_news($data);
 
+            // dd($response);
+
             return $this->json($response);
 
         } catch (\Throwable $th) {

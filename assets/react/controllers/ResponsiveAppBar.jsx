@@ -135,7 +135,7 @@ function ResponsiveAppBar() {
             <div className="px-1">
                 <div id="scroll-content" className="text-secondary ">
 
-                    <Marquee  style={{  }} >
+                <Marquee  style={{ width: 760 }} >
 
                         {trendsData && trendsData.map(item => {
                             
@@ -143,8 +143,8 @@ function ResponsiveAppBar() {
                             return (
                                 <>
                                     <div className='p-2'>
-                                        <a href='#'>
-                                            {ReactHtmlParser(item.title.toString())}
+                                        <a href={`${item.link}`} target='_blank'>
+                                            {ReactHtmlParser(item.title+' ;')}
                                             
                                         </a>
                                     
@@ -154,11 +154,11 @@ function ResponsiveAppBar() {
                             );
                         })}
 
-                        </Marquee>
 
 
 
 
+                </Marquee>
 
                 </div>
             </div>
