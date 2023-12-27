@@ -9,6 +9,7 @@ import { getCurrentDate } from './Hello';
 import axios from 'axios';
 import ReactHtmlParser from 'html-react-parser';
 import Marquee from "react-fast-marquee";
+import FlashOnIcon from '@mui/icons-material/FlashOn';
 
 
 function ResponsiveAppBar() {
@@ -67,7 +68,7 @@ function ResponsiveAppBar() {
                     <div className="display-4">
                         L'équilibre notre crédo
                     </div>
-                    <div className="text-secondary display-7"> {getCurrentDate('-')} </div>
+                    <div className="text-secondary small"> {getCurrentDate('/')} </div>
                 </div>
 
 
@@ -129,7 +130,7 @@ function ResponsiveAppBar() {
 
         <div className="border m-5 d-flex " id="subNavContainer">
             <div>
-                <div className="py-2 px-5 bg-danger text-white">Breaking News :</div>
+                <div className="py-2 px-5 bg-danger text-white">Flash <FlashOnIcon/></div>
             </div>
 
             <div className="px-1">

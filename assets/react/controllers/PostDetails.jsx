@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import axios from "axios";
-import { Paper, Typography, Button, CardMedia, Divider } from '@mui/material';
 import ResponsiveAppBar from "./ResponsiveAppBar";
-import ReactMarkdown from 'react-markdown';
 import "./../../css/blogposts.css";
 import Footer from "./Footer";
 import ReactHtmlParser from 'html-react-parser';
@@ -13,6 +11,9 @@ import SmsIcon from '@mui/icons-material/Sms';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import CategoryIcon from '@mui/icons-material/Category';
 import Sidewidgets from "./Sidewidgets";
+import PersonIcon from '@mui/icons-material/Person';
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+import { Divider } from "@mui/material";
 
 function PostDetails() {
 
@@ -72,10 +73,14 @@ function PostDetails() {
                                         {/*<!-- Post title-->*/}
                                         <h1 className="fs-4 fw-bolder mb-1">{post.titre}</h1>
                                         {/*<!-- Post meta content-->*/}
-                                        <div className="text-muted fst-italic mb-2">Par {post.createdby} le {new Date(post.createdAt).toLocaleDateString('fr-FR')}</div>
-                                        {/*<!-- Post categories-->*/}
-                                        <a className="badge bg-secondary text-decoration-none link-light mx-1" href="#!"> <VisibilityIcon/>  {post.viewCount} vues</a>
-                                        <a className="badge bg-secondary text-decoration-none link-light" href="#!"> <CategoryIcon/> {post.categorie}</a>
+                                        <div className="text-muted fst-italic mb-2"> <CalendarMonthIcon fontSize="small" color="error"/> 
+                                            {new Date(post.createdAt).toLocaleDateString('fr-FR')} <PersonIcon fontSize="small" color="error"/> {post.createdby}
+                                            {/*<!-- Post categories-->*/}
+                                            <a className="badge bg-secondary text-decoration-none link-light mx-1" href="#!"> <VisibilityIcon fontSize="small"/>  {post.viewCount} vues</a>
+                                            <a className="badge bg-secondary text-decoration-none link-light" href="#!"> <CategoryIcon fontSize="small"/> {post.categorie}</a>
+                                        
+                                        
+                                        </div>
                                     </header>
                                     {/*<!-- Preview image figure-->*/}
                                     <figure className="mb-4">
